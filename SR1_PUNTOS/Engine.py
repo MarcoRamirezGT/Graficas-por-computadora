@@ -16,33 +16,40 @@ while contX < 20:
     contX += 1
     # Paredes de la pokebola
     for i in range(100):
-        # Lado izquierdo
+        # Izquierda
         rend.glPoint(100+contX, 200+i)
-
+        # Derecha
         rend.glPoint(-100+contX, 200+i)
 
     # Parte de arriba
     for i in range(50):
-
+        # ARRIBA IZQUIERA
         rend.glPoint(120+contX, 300+i)
+        # Derecha
         rend.glPoint(-120+contX, 300+i)
+        # ABAJO izquierda
         rend.glPoint(120+contX, -350+i)
+        # Abajo derecha
         rend.glPoint(-120+contX, -350+i)
 
     # Tapa
     for i in range(40):
-
+        # Arriba
+        # Izquierda
         rend.glPoint(141+i, 349+contX)
         rend.glPoint(341+i, 349+contX)
+        # Derecha
         rend.glPoint(181+i, 369+contX)
         rend.glPoint(301+i, 369+contX)
-
+        # Abajo
         rend.glPoint(141+i, -371+contX)
         rend.glPoint(341+i, -371+contX)
         rend.glPoint(181+i, -391+contX)
         rend.glPoint(301+i, -391+contX)
     for i in range(80):
+        # Arriba
         rend.glPoint(221+i, 389+contX)
+        # Abajo
         rend.glPoint(221+i, -411+contX)
 
     print(contX)
