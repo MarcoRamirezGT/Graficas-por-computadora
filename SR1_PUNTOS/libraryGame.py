@@ -40,6 +40,12 @@ class Renderer(object):
     def glClearColor(self, r, g, b):
         self.clear_color = color(r, g, b)
 
+    def glViewport(self, x, y, width, height):
+        self.vpX = x
+        self.vpY = y
+        self.vpWidth = width
+        self.vpHeight = height
+
     def glClear(self):
         # Crea una lista 2D de pixeles y a cada valor le asigna 3 bytes de color
         self.pixels = [[self.clear_color for y in range(

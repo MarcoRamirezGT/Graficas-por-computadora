@@ -12,7 +12,9 @@ rend.glClear()
 
 contX = 0
 contY = 0
+
 while contX < 20:
+
     rend.glColor(0, 0, 0)
     contX += 1
     # Paredes de la pokebola
@@ -78,5 +80,6 @@ while contX < 20:
         rend.glPoint(241+i, 249+contX)
 
     print(contX)
+    rend.glViewport(100, 100, 400, 400)
 
 rend.glFinish("output.bmp")
