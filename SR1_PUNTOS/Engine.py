@@ -1,3 +1,4 @@
+
 from libraryGame import Renderer
 
 width = 500
@@ -18,12 +19,14 @@ while contX < 20:
     for i in range(100):
         # Izquierda
         rend.glPoint(100+contX, 200+i)
+
         # Derecha
         rend.glPoint(-100+contX, 200+i)
 
     # Parte de arriba
     for i in range(50):
         # ARRIBA IZQUIERA
+
         rend.glPoint(120+contX, 300+i)
         # Derecha
         rend.glPoint(-120+contX, 300+i)
@@ -51,9 +54,29 @@ while contX < 20:
         rend.glPoint(221+i, 389+contX)
         # Abajo
         rend.glPoint(221+i, -411+contX)
+    for i in range(30):
+        # Elementos dentro
+        rend.glPoint(120+contX, 240+i)
+        rend.glPoint(-120+contX, 240+i)
+    for i in range(40):
+        rend.glPoint(181+i, 199+contX)
+        rend.glPoint(141+i, 219+contX)
+
+        rend.glPoint(341+i, 219+contX)
+
+        # Abajo
+
+    for i in range(60):
+        rend.glPoint(181+i, 199+contX)
+        rend.glPoint(281+i, 199+contX)
+    for i in range(30):
+        # Elementos dentro
+        rend.glPoint(220+contX, 220+i)
+        rend.glPoint(-220+contX, 220+i)
+    for i in range(40):
+        rend.glPoint(241+i, 179+contX)
+        rend.glPoint(241+i, 249+contX)
 
     print(contX)
-rend.glColor(0.8, 0.5, 0.8)
-rend.glPoint(50, 50)
 
 rend.glFinish("output.bmp")
