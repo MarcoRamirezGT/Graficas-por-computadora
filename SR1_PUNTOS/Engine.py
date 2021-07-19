@@ -82,4 +82,4 @@ while contX < 20:
     print(contX)
     rend.glViewport(100, 100, 400, 400)
 
-rend.glFinish("output.bmp")
+rend.glFinish("pokebola.bmp")
