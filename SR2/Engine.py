@@ -1,8 +1,4 @@
-from libraryGame import Renderer, V2, color
-from numpy import sin, cos
-
-import random
-
+from libraryGame import Renderer, V2
 width = 500
 height = 500
 
