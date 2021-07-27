@@ -15,7 +15,9 @@ for x in range(len(Poligono1)):
 
     rend.glLine(Poligono1[x], Poligono1[(x+1) % len(Poligono1)])
     for y in range(3):
-        rend.glLine((V2(165+y, 380-y)), (V2(185+y, 360+y)))
+
+        rend.glPoint(165, 380)
+        #rend.glLine((V2(165+y, 380-y)), (V2(185+y, 360+y)))
 
 
 Poligono2 = [(V2(321, 335)), (V2(288, 286)), (V2(339, 251)), (V2(374, 302))]
@@ -44,4 +46,4 @@ for x in range(len(Poligono5)):
     rend.glLine(Poligono5[x], Poligono5[(x+1) % len(Poligono5)])
 
 
-rend.glFinish("Lab01.bmp")
+rend.glFinish("Lab01/lab01.bmp")
