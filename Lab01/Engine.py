@@ -15,15 +15,36 @@ for x in range(len(Poligono1)):
 
     rend.glLine(Poligono1[x], Poligono1[(x+1) % len(Poligono1)])
     for y in range(3):
+        rend.glPoint(165+y, 380+y)
 
         rend.glPoint(165, 380)
-        #rend.glLine((V2(165+y, 380-y)), (V2(185+y, 360+y)))
+        # rend.glLine((V2(165+y, 380-y)), (V2(185+y, 360+y)))
 
 
 Poligono2 = [(V2(321, 335)), (V2(288, 286)), (V2(339, 251)), (V2(374, 302))]
 
+
+# for y in range(53):
+
 for x in range(len(Poligono2)):
+
     rend.glLine(Poligono2[x], Poligono2[(x+1) % len(Poligono2)])
+    cont = 0
+   # while cont != 86:
+  #      cont += 1
+  #      y = 49//47
+   #     rend.glPoint(288+y, 286-y)
+    #    print(y+y)
+    #   print(cont)
+
+    for y in range(65):
+
+        y = (49//47)+(y//1.45)
+        y = int(y)
+       # rend.glPoint(288+y, 286-y//1.45)
+       # rend.glPoint(288+y, 286-y//1.45)
+        rend.glLine(V2(288+y, 286-y), V2(321+y, 335-y))
+
 
 Poligono3 = [(V2(377, 249)), (V2(411, 197)), (V2(436, 249))]
 for x in range(len(Poligono3)):
