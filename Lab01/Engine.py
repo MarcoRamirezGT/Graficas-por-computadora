@@ -27,21 +27,60 @@ rend.glTriangle(V2(339, 251), V2(374, 302),  V2(288, 286),  color(1, 0, 0))
 # Triangulo
 rend.glTriangle(V2(377, 249), V2(411, 197), V2(436, 249),  color(0, 0, 1))
 
+# Taza
+a = V2(413, 177)
+b = V2(448, 159)
+c = V2(502, 88)
+d = V2(553, 53)
+e = V2(535, 36)
+f = V2(676, 37)
+g = V2(660, 52)
+h = V2(750, 145)
+i = V2(761, 179)
+j = V2(672, 192)
+k = V2(659, 214)
+l = V2(615, 214)
+m = V2(632, 230)
+n = V2(580, 230)
+o = V2(597, 215)
+p = V2(552, 214)
+q = V2(517, 144)
+r = V2(466, 180)
+s = V2(609, 230)
+t = V2(614, 132)
 
-# Poligono4 = [(V2(413, 177)), (V2(448, 159)), (V2(502, 88)), (V2(553, 53)), (V2(535, 36)), (V2(676, 37)), (V2(660, 52)),
-#              (V2(750, 145)), (V2(761, 179)), (V2(672, 192)), (V2(659, 214)
-#                                                               ), (V2(615, 214)), (V2(632, 230)), (V2(580, 230)),
-#              (V2(597, 215)), (V2(552, 214)), (V2(517, 144)), (V2(466, 180))
-#              ]
+rend.glTriangle(a, r, b,  color(0.13, 0.30, 0.95))
+rend.glTriangle(q, r, b,  color(0.13, 0.30, 0.95))
+rend.glTriangle(q, c, b,  color(0.13, 0.30, 0.95))
+rend.glTriangle(q, c, d,  color(0.13, 0.30, 0.95))
+rend.glTriangle(d, g, e,  color(0.13, 0.30, 0.95))
+rend.glTriangle(e, g, f,  color(0.13, 0.30, 0.95))
+rend.glTriangle(q, d, t,  color(0.13, 0.30, 0.95))
+rend.glTriangle(q, p, t,  color(0.13, 0.30, 0.95))
+rend.glTriangle(p, o, t,  color(0.13, 0.30, 0.95))
+rend.glTriangle(o, l, t,  color(0.13, 0.30, 0.95))
+rend.glTriangle(o, n, s,  color(0.13, 0.30, 0.95))
+rend.glTriangle(o, s, l,  color(0.13, 0.30, 0.95))
+rend.glTriangle(s, l, m,  color(0.13, 0.30, 0.95))
+rend.glTriangle(l, k, t,  color(0.13, 0.30, 0.95))
+rend.glTriangle(k, j, t,  color(0.13, 0.30, 0.95))
+rend.glTriangle(j, i, h,  color(0.13, 0.30, 0.95))
+rend.glTriangle(j, h, t,  color(0.13, 0.30, 0.95))
+rend.glTriangle(h, t, g,  color(0.13, 0.30, 0.95))
+rend.glTriangle(t, d, g,  color(0.13, 0.30, 0.95))
 
-# for x in range(len(Poligono4)):
-#     rend.glLine(Poligono4[x], Poligono4[(x+1) % len(Poligono4)])
+# interior de la taza
+u = V2(682, 175)
+v = V2(708, 120)
+w = V2(735, 148)
+z = V2(739, 170)
+aa = V2(710, 160)
 
-# Poligono5 = [(V2(682, 175)), (V2(708, 120)), (V2(735, 148)), (V2(739, 170))]
 
-
-# for x in range(len(Poligono5)):
-#     rend.glLine(Poligono5[x], Poligono5[(x+1) % len(Poligono5)])
+rend.glTriangle(u, aa, z,  color(0, 0, 0))
+rend.glTriangle(z, aa, w,  color(0, 0, 0))
+rend.glTriangle(v, aa, w,  color(0, 0, 0))
+rend.glTriangle(u, aa, v,  color(0, 0, 0))
 
 
 rend.glFinish("lab01.bmp")
