@@ -164,3 +164,55 @@ class Renderer(object):
             for y in range(self.height):
                 for x in range(self.width):
                     file.write(self.pixels[x][y])
+
+    def glTriangle(self, A, B, C, color=None):
+
+        if A.y < B.y:
+            A, B = B, A
+        if A.y < C.y:
+            A, C = C, A
+        if B.y < C.y:
+            B, C = C, B
+
+        def flatBottomTriangle(v1, v2, v3):
+            try:
+                d_21 = (v2.x - v1.x) / (v2.y - v1.y)
+                d_31 = (v3.x - v1.x) / (v3.y - v1.y)
+            except:
+                pass
+            else:
+                x1 = v2.x
+                x2 = v3.x
+                for y in range(v2.y, v1.y + 1):
+                    self.glLine(V2(int(x1), y), V2(int(x2), y), color)
+                    x1 += d_21
+                    x2 += d_31
+
+        def flatTopTriangle(v1, v2, v3):
+            try:
+                d_31 = (v3.x - v1.x) / (v3.y - v1.y)
+                d_32 = (v3.x - v2.x) / (v3.y - v2.y)
+            except:
+                pass
+            else:
+                x1 = v3.x
+                x2 = v3.x
+
+                for y in range(v3.y, v1.y + 1):
+                    self.glLine(V2(int(x1), y), V2(int(x2), y), color)
+                    x1 += d_31
+                    x2 += d_32
+
+        if B.y == C.y:
+            # triangulo con base inferior plana
+            flatBottomTriangle(A, B, C)
+        elif A.y == B.y:
+            # triangulo con base superior plana
+            flatTopTriangle(A, B, C)
+        else:
+            # dividir el triangulo en dos
+            # dibujar ambos casos
+            # Teorema de intercepto
+            D = V2(A.x + ((B.y - A.y) / (C.y - A.y)) * (C.x - A.x), B.y)
+            flatBottomTriangle(A, B, D)
+            flatTopTriangle(B, D, C)
