@@ -1,9 +1,9 @@
 from libraryGame import Renderer, V2, color
-import sys
-import random
 
-width = 1920
-height = 1080
+
+width = 900
+
+height = 500
 
 rend = Renderer(width, height)
 
