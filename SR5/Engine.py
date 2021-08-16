@@ -3,8 +3,6 @@ from libraryGame import Renderer, V3, _color
 
 from obj import Texture
 
-import random
-
 
 width = 1920
 height = 1080
@@ -24,4 +22,4 @@ rend.glLoadModel("models/model.obj",
                  rotate=V3(0, 0, 0))
 
 
-rend.glFinish("outputCambios2.bmp")
+rend.glFinish("outputCambios4.bmp")

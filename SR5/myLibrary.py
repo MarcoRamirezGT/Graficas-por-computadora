@@ -170,16 +170,48 @@ def inverse(matrix):
                 curRow -= 1
             col -= 1
 
-#     for row in range(len(invertedMatrix)):
-#         invertedMatrix[row] = invertedMatrix[row][matrixWidth:]
-#     return invertedMatrix
+# #     for row in range(len(invertedMatrix)):
+# #         invertedMatrix[row] = invertedMatrix[row][matrixWidth:]
+# #     return invertedMatrix
 
 
-# camMatrix = np.matrix([[0.89442719, 0.18257419, -0.40824829, -5],
-#                        [-0, 0.91287093, 0.40824829, 5],
-#                        [0.4472136, -0.36514837, 0.81649658, 0],
-#                        [0, 0, 0, 1]])
+# # camMatrix = np.matrix([[0.89442719, 0.18257419, -0.40824829, -5],
+# #                        [-0, 0.91287093, 0.40824829, 5],
+# #                        [0.4472136, -0.36514837, 0.81649658, 0],
+# #                        [0, 0, 0, 1]])
 
-# print(camMatrix)
+# # print(camMatrix)
 
-# print(invertedAugmentMatrix(camMatrix))
+# # print(invertedAugmentMatrix(camMatrix))
+# #a = [0.1115538, 0.477012, -8.054662, 1]
+# x, y = 4, 1
+
+# a = [[0 for x in range(x)] for y in range(y)]
+# a[0][0] = 0.0854448
+# a[0][1] = 0.103577
+# a[0][2] = 0.606979
+# a[0][3] = 1
+
+# w, h = 4, 4
+# b = [[0 for x in range(w)] for y in range(h)]
+# b[0][0] = 3
+# b[0][1] = 0
+# b[0][2] = 0
+# b[0][3] = 0
+# b[1][0] = 0
+# b[1][1] = 3
+# b[1][2] = 0
+# b[1][3] = 0
+# b[2][0] = 0
+# b[2][1] = 0
+# b[2][2] = 3
+# b[2][3] = -10
+# b[3][0] = 0
+# b[3][1] = 0
+# b[3][2] = 0
+# b[3][3] = 1
+
+# #print(a, b)
+# #print(multiplyMatrices(a, b))
+# # resultado  [[ 0.2563344 -0.310731  -8.179063   1.       ]]
+# print(a)
