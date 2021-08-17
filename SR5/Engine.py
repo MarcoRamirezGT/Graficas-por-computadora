@@ -1,4 +1,3 @@
-# Programa principal
 from libraryGame import Renderer, V3, _color
 
 from obj import Texture
@@ -13,7 +12,7 @@ modelTexture = Texture("models/model.bmp")
 
 modelPosition = V3(0, 0, -10)
 
-rend.glLookAt(modelPosition, V3(-5, 5, 0))
+rend.glLookAt(modelPosition, V3(0, 8, 0))
 
 rend.glLoadModel("models/model.obj",
                  modelTexture,
@@ -22,4 +21,4 @@ rend.glLoadModel("models/model.obj",
                  rotate=V3(0, 0, 0))
 
 
-rend.glFinish("FINAL.bmp")
+rend.glFinish("high.bmp")
