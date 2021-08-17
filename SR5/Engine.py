@@ -15,11 +15,11 @@ modelPosition = V3(0, 0, -10)
 
 rend.glLookAt(modelPosition, V3(-5, 5, 0))
 
-rend.glLoadModel("models/model.obj",
+rend.glLoadModel("models/dragon.obj",
                  modelTexture,
                  translate=modelPosition,
-                 scale=V3(3, 3, 3),
+                 scale=V3(1, 1, 1),
                  rotate=V3(0, 0, 0))
 
 
-rend.glFinish("outputCambios4.bmp")
+rend.glFinish("sr5.bmp")

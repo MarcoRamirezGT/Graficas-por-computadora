@@ -1,4 +1,9 @@
 
+
+def pi():
+    return 22/7
+
+
 def crossProduct(vector1, vector2):
     if len(vector1) == 3 and len(vector2) == 3:
         i = vector1[1]*vector2[2] - vector2[1]*vector1[2]
@@ -11,13 +16,13 @@ def crossProduct(vector1, vector2):
         return [k]
     else:
 
-        return 'invalid arguments'
+        return "Argumentos no validos"
 
 
 def subtract(vector1, vector2):
     newVector = []
     if len(vector1) != len(vector2):
-        return 'invalid arguments'
+        return "Argumentos no validos"
     else:
         for x in range(len(vector1)):
             newVector.append(vector1[x]-vector2[x])
@@ -44,7 +49,7 @@ def normalize(vector1):
 
 def dotProduct(vector1, vector2):
     if len(vector1) != len(vector2):
-        return 'invalid arguments'
+        return "Argumentos no validos"
     else:
         total = 0
         for x in range(len(vector1)):
@@ -77,7 +82,7 @@ def multiplyMatrices(matrix1, matrix2):
 def add(vector1, vector2):
     newVector = []
     if len(vector1) != len(vector2):
-        return 'invalid arguments'
+        return "Argumentos no validos"
     else:
         for x in range(len(vector1)):
             newVector.append(vector1[x]+vector2[x])
@@ -119,7 +124,7 @@ def scaleElements(matrix, scalar):
 
 def inverse(matrix):
     if len(matrix) != len(matrix[0]):
-        return 'Matrix is non invertible'
+        return 'Matrix no convertible'
     else:
         invertedMatrix = invertedAugmentMatrix(matrix)
         matrixWidth = len(matrix[0])
@@ -170,48 +175,16 @@ def inverse(matrix):
                 curRow -= 1
             col -= 1
 
-# #     for row in range(len(invertedMatrix)):
-# #         invertedMatrix[row] = invertedMatrix[row][matrixWidth:]
-# #     return invertedMatrix
+    for row in range(len(invertedMatrix)):
+        invertedMatrix[row] = invertedMatrix[row][matrixWidth:]
+    return invertedMatrix
 
 
-# # camMatrix = np.matrix([[0.89442719, 0.18257419, -0.40824829, -5],
-# #                        [-0, 0.91287093, 0.40824829, 5],
-# #                        [0.4472136, -0.36514837, 0.81649658, 0],
-# #                        [0, 0, 0, 1]])
-
-# # print(camMatrix)
-
-# # print(invertedAugmentMatrix(camMatrix))
-# #a = [0.1115538, 0.477012, -8.054662, 1]
-# x, y = 4, 1
-
-# a = [[0 for x in range(x)] for y in range(y)]
-# a[0][0] = 0.0854448
-# a[0][1] = 0.103577
-# a[0][2] = 0.606979
-# a[0][3] = 1
-
-# w, h = 4, 4
-# b = [[0 for x in range(w)] for y in range(h)]
-# b[0][0] = 3
-# b[0][1] = 0
-# b[0][2] = 0
-# b[0][3] = 0
-# b[1][0] = 0
-# b[1][1] = 3
-# b[1][2] = 0
-# b[1][3] = 0
-# b[2][0] = 0
-# b[2][1] = 0
-# b[2][2] = 3
-# b[2][3] = -10
-# b[3][0] = 0
-# b[3][1] = 0
-# b[3][2] = 0
-# b[3][3] = 1
-
-# #print(a, b)
-# #print(multiplyMatrices(a, b))
-# # resultado  [[ 0.2563344 -0.310731  -8.179063   1.       ]]
-# print(a)
+def multiplyMatricesVector(matrix, vector):
+    newMatrix = []
+    for n in range(4):
+        res = 0
+        for j in range(4):
+            res += matrix[n][j] * vector[j]
+        newMatrix.append(res)
+    return newMatrix
