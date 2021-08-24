@@ -12,12 +12,12 @@ rend = Renderer(width, height)
 
 rend.directional_light = V3(1, 0, 0)
 
-rend.active_texture = Texture('models/model.bmp')
+rend.active_texture = Texture('models/portalred.bmp')
 rend.active_shader = toon
 
-rend.glLoadModel("models/Madara_Uchiha.obj",
+rend.glLoadModel("models/dragon.obj",
                  translate=V3(0, 0, -10),
-                 scale=V3(0.001, 0.001, 0.001),
+                 scale=V3(0.01, 0.01, 0.01),
                  rotate=V3(0, 0, 0))
 
 rend.glFinish("output.bmp")
