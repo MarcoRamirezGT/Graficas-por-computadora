@@ -1,23 +1,44 @@
 # Programa principal
-from libraryGame import Renderer, V3, _color
+from libraryGame import Renderer, V3
 from obj import Texture
 from shaders import *
 
-import random
 
-width = 960
-height = 540
+width = 1920
+height = 1080
 
 rend = Renderer(width, height)
 
 rend.directional_light = V3(1, 0, 0)
 
-rend.active_texture = Texture('models/portalred.bmp')
+rend.active_texture = Texture('models/model.bmp')
+rend.active_shader = holographic
+
+rend.glLoadModel("models/model.obj",
+                 translate=V3(-5, -2, -10),
+                 scale=V3(2, 2, 2),
+                 rotate=V3(0, 0, 0))
+# rend.directional_light = V3(1, 1, 0)
+
+rend.active_shader = colors
+
+
+rend.glLoadModel("models/model.obj",
+                 translate=V3(-5, 2, -10),
+                 scale=V3(2, 2, 2),
+                 rotate=V3(0, 0, 0))
 rend.active_shader = toon
 
-rend.glLoadModel("models/dragon.obj",
-                 translate=V3(0, 0, -10),
-                 scale=V3(0.01, 0.01, 0.01),
+rend.glLoadModel("models/model.obj",
+                 translate=V3(5, -2, -10),
+                 scale=V3(2, 2, 2),
+                 rotate=V3(0, 0, 0))
+
+rend.active_shader = shader1
+
+rend.glLoadModel("models/model.obj",
+                 translate=V3(5, 2, -10),
+                 scale=V3(2, 2, 2),
                  rotate=V3(0, 0, 0))
 
 rend.glFinish("output.bmp")
