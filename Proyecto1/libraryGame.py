@@ -66,9 +66,20 @@ class Renderer(object):
         self.glCreateWindow(width, height)
         self.active_texture = None
         self.active_texture2 = None
-
+        self.normal_map = None
+        self.background = None
         self.active_shader = None
         self.directional_light = V3(0, 0, -1)
+
+    def glClearBackground(self):
+        if self.background:
+            for x in range(self.vpX, self.vpX + self.vpWidth):
+                for y in range(self.vpY, self.vpY + self.vpHeight):
+
+                    tx = (x - self.vpX) / self.vpWidth
+                    ty = (y - self.vpY) / self.vpHeight
+
+                    self.glPoint(x, y, self.background.getColor(tx, ty))
 
     def glFinish(self, filename):
         # Crea un archivo BMP y lo llena con la información dentro de self.pixels
@@ -405,8 +416,9 @@ class Renderer(object):
        # return(translateMatrix * rotationMatrix * scaleMatrix)
 
     def glViewMatrix(self, translate=V3(0, 0, 0), rotate=V3(0, 0, 0)):
-        camMatrix = self.glCreateObjectMatrix(translate, V3(1, 1, 1), rotate)
-        self.viewMatrix = inverse(camMatrix)
+        self.camMatrix = self.glCreateObjectMatrix(
+            translate, V3(1, 1, 1), rotate)
+        self.viewMatrix = inverse(self.camMatrix)
 
     def glLookAt(self, eye, camPosition=V3(0, 0, 0)):
         forward = subtract(camPosition, eye)

@@ -315,3 +315,76 @@ def colors(render, **kwargs):
         b = b**b
 
     return r, g, b
+
+
+def normalMap(render, **kwargs):
+    A, B, C = kwargs['verts']
+    u, v, w = kwargs['baryCoords']
+    tA, tB, tC = kwargs['texCoords']
+    b, g, r = kwargs['color']
+    nA, nB, nC = kwargs['normals']
+
+    b /= 255
+    g /= 255
+    r /= 255
+
+    if render.active_texture:
+        tx = tA[0] * u + tB[0] * v + tC[0] * w
+        ty = tA[1] * u + tB[1] * v + tC[1] * w
+        texColor = render.active_texture.getColor(tx, ty)
+        b *= texColor[0] / 255
+        g *= texColor[1] / 255
+        r *= texColor[2] / 255
+
+    nX = nA[0] * u + nB[0] * v + nC[0] * w
+    nY = nA[1] * u + nB[1] * v + nC[1] * w
+    nZ = nA[2] * u + nB[2] * v + nC[2] * w
+    normal = (nX, nY, nZ)
+
+    dirLight = [render.directional_light]
+
+    if render.normal_map:
+        texNormal = render.normal_map.getColor(tx, ty)
+        texNormal = [(texNormal[2] / 255) * 2 - 1,
+                     (texNormal[1] / 255) * 2 - 1,
+                     (texNormal[0] / 255) * 2 - 1]
+
+        texNormal = texNormal / np.linalg.norm(texNormal)
+
+        edge1 = subtract(B, A)
+        edge2 = subtract(C, A)
+        deltaUV1 = subtract(tB, tA)
+        deltaUV2 = subtract(tC, tA)
+
+        f = 1 / (deltaUV1[0] * deltaUV2[1] - deltaUV2[0] * deltaUV1[1])
+
+        tangent = [f * (deltaUV2[1] * edge1[0] - deltaUV1[1] * edge2[0]),
+                   f * (deltaUV2[1] * edge1[1] - deltaUV1[1] * edge2[1]),
+                   f * (deltaUV2[1] * edge1[2] - deltaUV1[1] * edge2[2])]
+        tangent = normalize(tangent)
+        tangent = subtract(tangent, multiplyMatrices(
+            dotProduct(tangent, normal), normal))
+        tangent = normalize(tangent)
+
+        bitangent = crossProduct(normal, tangent)
+        bitangent = normalize(bitangent)
+
+        tangentMatrix = [[tangent[0],  bitangent[0],  normal[0]],
+                         [tangent[1],  bitangent[1],  normal[1]],
+                         [tangent[2],  bitangent[2],  normal[2]]]
+
+        texNormal = tangentMatrix @ texNormal
+        texNormal = texNormal.tolist()[0]
+        texNormal = normalize(texNormal)
+        intensity = dotProduct(texNormal, -dirLight)
+    else:
+        intensity = dotProduct(normal, -dirLight)
+
+    b *= intensity
+    g *= intensity
+    r *= intensity
+
+    if intensity > 0:
+        return r, g, b
+    else:
+        return 0, 0, 0
