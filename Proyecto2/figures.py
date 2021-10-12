@@ -163,14 +163,7 @@ class AABB(object):
         halfSizeX = size[0] / 2
         halfSizeY = size[1] / 2
         halfSizeZ = size[2] / 2
-        print("POSITION")
-        print(position)
-        print("VE3")
-        print(V3(halfSizeX, 0, 0))
-        print("V3")
-        print(V3(1, 0, 0))
-        print("MATERIAL")
-        print(material)
+
         # Sides
         self.planes.append(
             Plane(np.add(position, V3(halfSizeX, 0, 0)), V3(1, 0, 0), material))
