@@ -1,4 +1,5 @@
 import pygame
+import pygame_gui
 
 from math import cos, sin, pi
 
@@ -156,84 +157,136 @@ class Raycaster(object):
             self.screen.set_at((halfWidth-1, i), pygame.Color('black'))
 
 
-width = 1000
-height = 500
+def game():
 
-pygame.init()
+    def updateFPS():
 
-screen = pygame.display.set_mode(
-    (width, height), pygame.DOUBLEBUF | pygame.HWACCEL)
-screen.set_alpha(None)
+        fps = str(int(clock.get_fps()))
 
-rCaster = Raycaster(screen)
-rCaster.load_map("map_f.txt")
+        fps = font.render(fps, 1, pygame.Color("white"))
+        return fps
 
-clock = pygame.time.Clock()
-font = pygame.font.SysFont("Arial", 25)
+    width = 1000
+    height = 500
 
+    pygame.init()
 
-def updateFPS():
-    fps = str(int(clock.get_fps()))
-    fps = font.render(fps, 1, pygame.Color("white"))
-    return fps
+    pygame.display.set_caption("The Catacomb Abyss")
 
+    screen = pygame.display.set_mode(
+        (width, height), pygame.DOUBLEBUF | pygame.HWACCEL)
+    screen.set_alpha(None)
 
-isRunning = True
-while isRunning:
+    rCaster = Raycaster(screen)
+    rCaster.load_map("map_f.txt")
 
-    for ev in pygame.event.get():
-        if ev.type == pygame.QUIT:
-            isRunning = False
+    clock = pygame.time.Clock()
+    font = pygame.font.SysFont("Arial", 25)
 
-        elif ev.type == pygame.KEYDOWN:
-            newX = rCaster.player['x']
-            newY = rCaster.player['y']
-            forward = rCaster.player['angle'] * pi / 180
-            right = (rCaster.player['angle'] + 90) * pi / 180
+    isRunning = True
+    while isRunning:
 
-            if ev.key == pygame.K_ESCAPE:
+        for ev in pygame.event.get():
+            if ev.type == pygame.QUIT:
                 isRunning = False
-            elif ev.key == pygame.K_w:
-                newX += cos(forward) * rCaster.stepSize
-                newY += sin(forward) * rCaster.stepSize
-            elif ev.key == pygame.K_s:
-                newX -= cos(forward) * rCaster.stepSize
-                newY -= sin(forward) * rCaster.stepSize
-            elif ev.key == pygame.K_a:
-                newX -= cos(right) * rCaster.stepSize
-                newY -= sin(right) * rCaster.stepSize
-            elif ev.key == pygame.K_d:
-                newX += cos(right) * rCaster.stepSize
-                newY += sin(right) * rCaster.stepSize
-            elif ev.key == pygame.K_q:
-                rCaster.player['angle'] -= rCaster.turnSize
-            elif ev.key == pygame.K_e:
-                rCaster.player['angle'] += rCaster.turnSize
 
-            i = int(newX/rCaster.blocksize)
-            j = int(newY/rCaster.blocksize)
+            elif ev.type == pygame.KEYDOWN:
+                newX = rCaster.player['x']
+                newY = rCaster.player['y']
+                forward = rCaster.player['angle'] * pi / 180
+                right = (rCaster.player['angle'] + 90) * pi / 180
 
-            if rCaster.map[j][i] == ' ':
-                rCaster.player['x'] = newX
-                rCaster.player['y'] = newY
+                if ev.key == pygame.K_ESCAPE:
+                    isRunning = False
+                elif ev.key == pygame.K_w:
+                    newX += cos(forward) * rCaster.stepSize
+                    newY += sin(forward) * rCaster.stepSize
+                elif ev.key == pygame.K_s:
+                    newX -= cos(forward) * rCaster.stepSize
+                    newY -= sin(forward) * rCaster.stepSize
+                elif ev.key == pygame.K_a:
+                    newX -= cos(right) * rCaster.stepSize
+                    newY -= sin(right) * rCaster.stepSize
+                elif ev.key == pygame.K_d:
+                    newX += cos(right) * rCaster.stepSize
+                    newY += sin(right) * rCaster.stepSize
+                elif ev.key == pygame.K_q:
+                    rCaster.player['angle'] -= rCaster.turnSize
+                elif ev.key == pygame.K_e:
+                    rCaster.player['angle'] += rCaster.turnSize
 
-    screen.fill(pygame.Color("gray"))
+                i = int(newX/rCaster.blocksize)
+                j = int(newY/rCaster.blocksize)
 
-    # Techo
-    screen.fill(pygame.Color("saddlebrown"),
-                (int(width / 2), 0,  int(width / 2), int(height / 2)))
+                if rCaster.map[j][i] == ' ':
+                    rCaster.player['x'] = newX
+                    rCaster.player['y'] = newY
 
-    # Piso
-    screen.fill(pygame.Color("dimgray"), (int(width / 2),
-                int(height / 2),  int(width / 2), int(height / 2)))
+        screen.fill(pygame.Color("gray"))
 
-    rCaster.render()
+        # Techo
+        screen.fill(pygame.Color("saddlebrown"),
+                    (int(width / 2), 0,  int(width / 2), int(height / 2)))
 
-    # FPS
-    screen.fill(pygame.Color("black"), (0, 0, 30, 30))
-    screen.blit(updateFPS(), (0, 0))
-    clock.tick(60)
+        # Piso
+        screen.fill(pygame.Color("dimgray"), (int(width / 2),
+                    int(height / 2),  int(width / 2), int(height / 2)))
 
-    pygame.display.flip()
+        rCaster.render()
 
-pygame.quit()
+        # FPS
+        screen.fill(pygame.Color("black"), (0, 0, 30, 30))
+        screen.blit(updateFPS(), (0, 0))
+        clock.tick(60)
+
+        pygame.display.flip()
+
+    pygame.quit()
+
+
+def gui():
+    pygame.init()
+
+    pygame.display.set_caption('The Catacomb Abyss')
+    window_surface = pygame.display.set_mode((800, 600))
+    manager = pygame_gui.UIManager((800, 600), 'data/themes/quick_theme.json')
+
+    background = pygame.Surface((800, 600))
+    x = pygame.image.load('b.png').convert()
+  #  background.fill(manager.ui_theme.get_colour('dark_bg'))
+    window_surface.blit(x, [0, 0])
+
+    start = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((350, 280), (150, 40)),
+                                         text='Start',
+                                         manager=manager)
+    exit = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((350, 330), (150, 40)),
+                                        text='Exit',
+                                        manager=manager)
+
+    clock = pygame.time.Clock()
+    is_running = True
+
+    while is_running:
+        time_delta = clock.tick(60)/1000.0
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                is_running = False
+
+            if (event.type == pygame.USEREVENT and event.user_type == pygame_gui.UI_BUTTON_PRESSED and
+                    event.ui_element == start):
+                game()
+            if (event.type == pygame.USEREVENT and event.user_type == pygame_gui.UI_BUTTON_PRESSED and
+                    event.ui_element == exit):
+                pygame.quit()
+
+            manager.process_events(event)
+
+        manager.update(time_delta)
+        x = pygame.image.load('b.png').convert()
+        window_surface.blit(x, [0, 0])
+        manager.draw_ui(window_surface)
+
+        pygame.display.update()
+
+
+gui()
