@@ -1,6 +1,6 @@
 import pygame
 import pygame_gui
-
+import sys
 from math import cos, sin, pi
 
 RAY_AMOUNT = 100
@@ -166,6 +166,12 @@ def game():
         fps = font.render(fps, 1, pygame.Color("white"))
         return fps
 
+    def level():
+        level = 'level 1'
+
+        level = font.render(level, 1, pygame.Color("white"))
+        return level
+
     width = 1000
     height = 500
 
@@ -197,7 +203,7 @@ def game():
                 right = (rCaster.player['angle'] + 90) * pi / 180
 
                 if ev.key == pygame.K_ESCAPE:
-                    isRunning = False
+                    pause()
                 elif ev.key == pygame.K_w:
                     newX += cos(forward) * rCaster.stepSize
                     newY += sin(forward) * rCaster.stepSize
@@ -237,11 +243,14 @@ def game():
         # FPS
         screen.fill(pygame.Color("black"), (0, 0, 30, 30))
         screen.blit(updateFPS(), (0, 0))
+
+        screen.blit(level(), (0, 30))
         clock.tick(60)
 
         pygame.display.flip()
 
     pygame.quit()
+    sys
 
 
 def gui():
@@ -249,7 +258,7 @@ def gui():
 
     pygame.display.set_caption('The Catacomb Abyss')
     window_surface = pygame.display.set_mode((800, 600))
-    manager = pygame_gui.UIManager((800, 600), 'data/themes/quick_theme.json')
+    manager = pygame_gui.UIManager((800, 600))
 
     background = pygame.Surface((800, 600))
     x = pygame.image.load('b.png').convert()
@@ -275,9 +284,78 @@ def gui():
             if (event.type == pygame.USEREVENT and event.user_type == pygame_gui.UI_BUTTON_PRESSED and
                     event.ui_element == start):
                 game()
+                sys.exit()
+
             if (event.type == pygame.USEREVENT and event.user_type == pygame_gui.UI_BUTTON_PRESSED and
                     event.ui_element == exit):
                 pygame.quit()
+
+            if event.type == pygame.KEYUP:
+                if (event.type == pygame.USEREVENT and event.user_type == pygame_gui.UI_BUTTON_PRESSED and
+                        event.ui_element == start):
+                    game()
+                    sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if (event.type == pygame.USEREVENT and event.user_type == pygame_gui.UI_BUTTON_PRESSED and
+                        event.ui_element == exit):
+                    pygame.quit()
+
+            manager.process_events(event)
+
+        manager.update(time_delta)
+        x = pygame.image.load('b.png').convert()
+        window_surface.blit(x, [0, 0])
+        manager.draw_ui(window_surface)
+
+        pygame.display.update()
+
+
+def pause():
+    pygame.init()
+
+    pygame.display.set_caption('The Catacomb Abyss')
+    window_surface = pygame.display.set_mode((800, 600))
+    manager = pygame_gui.UIManager((800, 600))
+
+    background = pygame.Surface((800, 600))
+    x = pygame.image.load('b.png').convert()
+  #  background.fill(manager.ui_theme.get_colour('dark_bg'))
+    window_surface.blit(x, [0, 0])
+
+    resume = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((350, 280), (150, 40)),
+                                          text='Resume',
+                                          manager=manager)
+    exit = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((350, 330), (150, 40)),
+                                        text='Exit',
+                                        manager=manager)
+
+    clock = pygame.time.Clock()
+    is_running = True
+
+    while is_running:
+        time_delta = clock.tick(60)/1000.0
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                is_running = False
+
+            if (event.type == pygame.USEREVENT and event.user_type == pygame_gui.UI_BUTTON_PRESSED and
+                    event.ui_element == resume):
+                game()
+                sys.exit()
+
+            if (event.type == pygame.USEREVENT and event.user_type == pygame_gui.UI_BUTTON_PRESSED and
+                    event.ui_element == exit):
+                pygame.quit()
+
+            if event.type == pygame.KEYUP:
+                if (event.type == pygame.USEREVENT and event.user_type == pygame_gui.UI_BUTTON_PRESSED and
+                        event.ui_element == resume):
+                    game()
+                    sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if (event.type == pygame.USEREVENT and event.user_type == pygame_gui.UI_BUTTON_PRESSED and
+                        event.ui_element == exit):
+                    pygame.quit()
 
             manager.process_events(event)
 
