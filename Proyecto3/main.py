@@ -1,7 +1,10 @@
 import pygame
 import sys
+from math import cos, sin, pi, atan2
+from pygame import mixer
+
 import time
-from RayCaster import *
+
 pygame.init()
 
 gray = (119, 118, 110)
@@ -26,9 +29,16 @@ clock = pygame.time.Clock()
 intro_background = pygame.image.load('menu.jpg')
 instruction_background = pygame.image.load('menu.jpg')
 
+mixer.music.load('music.mp3')
+mixer.music.set_volume(0.8)
+mixer.music.play(-1)
+
 
 def game_loop():
-
+    global pause
+    mixer.music.load('music.mp3')
+    mixer.music.set_volume(0.3)
+    mixer.music.play(-1)
     RAY_AMOUNT = 100
     SPRITE_BACKGROUND = (152, 0, 136, 255)
 
@@ -273,6 +283,7 @@ def game_loop():
         return fps
 
     isRunning = True
+    pasos = mixer.Sound('pasos2.mp3')
     while isRunning:
 
         for ev in pygame.event.get():
@@ -288,21 +299,27 @@ def game_loop():
                 if ev.key == pygame.K_ESCAPE:
                     isRunning = False
                 elif ev.key == pygame.K_w:
+                    pasos.play()
                     newX += cos(forward) * rCaster.stepSize
                     newY += sin(forward) * rCaster.stepSize
                 elif ev.key == pygame.K_s:
+                    pasos.play()
                     newX -= cos(forward) * rCaster.stepSize
                     newY -= sin(forward) * rCaster.stepSize
                 elif ev.key == pygame.K_a:
+                    pasos.play()
                     newX -= cos(right) * rCaster.stepSize
                     newY -= sin(right) * rCaster.stepSize
                 elif ev.key == pygame.K_d:
+                    pasos.play()
                     newX += cos(right) * rCaster.stepSize
                     newY += sin(right) * rCaster.stepSize
                 elif ev.key == pygame.K_q:
                     rCaster.player['angle'] -= rCaster.turnSize
                 elif ev.key == pygame.K_e:
                     rCaster.player['angle'] += rCaster.turnSize
+                elif ev.key == pygame.K_p:
+                    paused()
 
                 i = int(newX/rCaster.blocksize)
                 j = int(newY/rCaster.blocksize)
@@ -329,31 +346,13 @@ def game_loop():
         screen.blit(updateFPS(), (0, 0))
         clock.tick(60)
 
-        button('Pause', 500, 0, 150, 50, blue, red, "pause")
+        button('Pause', 450, 0, 150, 50, techo, piso, "pause")
 
         pygame.display.flip()
 
     pygame.quit()
     quit()
     sys.exit()
-
-
-def menu():
-    intro = True
-    while intro:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                quit()
-                sys.exit()
-        gamedisplays.blit(intro_background, (0, 0))
-
-        button('INICIO', 200, 300, 200, 50, techo, piso, 'play')
-        button('SALIR', 200, 500, 200, 50, techo, piso, 'quit')
-        button('CONTROLES', 200, 400, 200, 50, techo, piso, 'intro')
-
-        pygame.display.update()
-        clock.tick(50)
 
 
 def text_objects(text, font, color):
@@ -400,28 +399,121 @@ def introduction():
         gamedisplays.blit(atextSurf, atextRect)
         gamedisplays.blit(rtextSurf, rTextRect)
         gamedisplays.blit(ptextSurf, ptextRect)
-        button("ATRAS", 250, 500, 100, 50, techo, piso, 'menu')
+        button("ATRAS", 250, 500, 100, 50, techo, piso, 'inicio')
 
         pygame.display.update()
         clock.tick(30)
 
 
+def intro_loop():
+    introduction = True
+
+    while introduction:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+                sys.exit()
+        gamedisplays.blit(instruction_background, (0, 0))
+
+        # largetext = pygame.font.Font('freesansbold.ttf', 80)
+        # smalltext = pygame.font.Font('freesansbold.ttf', 20)
+        # mediumtext = pygame.font.Font('freesansbold.ttf', 40)
+
+        # TextSurf, TextRect = text_objects('CONTROLES', mediumtext, techo)
+        # TextRect.center = ((300), (80))
+        # gamedisplays.blit(TextSurf, TextRect)
+        # ptextSurf, ptextRect = text_objects('P : PAUSA', smalltext, techo)
+        # ptextRect.center = ((200), (150))
+
+        # stextSurf, stextRect = text_objects('W : Adelante', smalltext, techo)
+        # stextRect.center = ((200), (200))
+        # htextSurf, hTextRect = text_objects('A : IZQUIERDA', smalltext, techo)
+        # hTextRect.center = ((200), (250))
+        # atextSurf, atextRect = text_objects('S : ATRAS', smalltext, techo)
+        # atextRect.center = ((200), (300))
+        # rtextSurf, rTextRect = text_objects('D : DERECHA', smalltext, techo)
+        # rTextRect.center = ((200), (350))
+        # q_btn, q_btn_r = text_objects('Q : GIRAR IZQUIERDA', smalltext, techo)
+        # q_btn_r.center = ((200), (400))
+        # gamedisplays.blit(q_btn, q_btn_r)
+        # e_btn, e_btn_r = text_objects('E : GIRAR DERECHA', smalltext, techo)
+        # e_btn_r.center = ((200), (450))
+        # gamedisplays.blit(e_btn, e_btn_r)
+        # gamedisplays.blit(stextSurf, stextRect)
+        # gamedisplays.blit(htextSurf, hTextRect)
+        # gamedisplays.blit(atextSurf, atextRect)
+        # gamedisplays.blit(rtextSurf, rTextRect)
+        # gamedisplays.blit(ptextSurf, ptextRect)
+        button("INICIO", 200, 300, 100, 50, techo, piso, 'play')
+        button("SALIR", 200, 500, 100, 50, techo, piso, 'quit')
+        button("CONTROLES", 200, 400, 100, 50, techo, piso, 'intro')
+        # button('INICIO', 200, 300, 200, 50, techo, piso, 'play')
+        # button('SALIR', 200, 500, 200, 50, techo, piso, 'quit')
+        # button('CONTROLES', 200, 400, 200, 50, techo, piso, 'intro')
+
+        pygame.display.update()
+        clock.tick(30)
+
+
+def paused():
+    global pause
+    pause = True
+
+    while pause:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+                sys.exit()
+        gamedisplays.blit(intro_background, (0, 0))
+        mediumtext = pygame.font.Font('freesansbold.ttf', 40)
+        button('', 25, 25, 550, 550, piso, piso, None)
+        title_pause, title_pause_r = text_objects("PAUSA", mediumtext, techo)
+        title_pause_r.center = ((display_width//2), (display_height//2))
+        gamedisplays.blit(title_pause, title_pause_r)
+        button("CONTINUAR", 25, 400, 150, 50, techo, piso, 'resume')
+        button("REINICIAR", 225, 400, 150, 50, techo, piso, 'play')
+        button("MENU", 425, 400, 150, 50, techo, piso, 'inicio')
+        pygame.display.update()
+        clock.tick(30)
+
+
+def resume():
+    global pause
+    pause = False
+
+
 def button(msg, x, y, w, h, ic, ac, action=None):
+    selected = mixer.Sound('click.wav')
     mouse = pygame.mouse.get_pos()
     click = pygame.mouse.get_pressed()
     if x+w > mouse[0] > x and y+h > mouse[1] > y:
         pygame.draw.rect(gamedisplays, ac, (x, y, w, h))
         if click[0] == 1 and action != None:
             if action == 'play':
+                selected.play()
                 game_loop()
-            elif action == 'quit':
+
+            if action == 'intro':
+                selected.play()
+                introduction()
+            if action == 'inicio':
+                selected.play()
+
+                intro_loop()
+            if action == 'pause':
+                selected.play()
+                paused()
+            if action == 'resume':
+                selected.play()
+                resume()
+            if action == 'quit':
+                selected.play()
                 pygame.quit()
                 quit()
                 sys.exit()
-            elif action == 'intro':
-                introduction()
-            elif action == 'menu':
-                menu()
+
     else:
         pygame.draw.rect(gamedisplays, ic, (x, y, w, h))
     smalltext = pygame.font.Font('freesansbold.ttf', 20)
@@ -430,7 +522,4 @@ def button(msg, x, y, w, h, ic, ac, action=None):
     gamedisplays.blit(textsurf, textrect)
 
 
-menu()
-game_loop()
-pygame.quit()
-quit()
+intro_loop()
